@@ -117,9 +117,14 @@ set_prompts() {
 
         cyan=$(tput setaf 37)
         green=$(tput setaf 64)
+        lime_green=$(tput setaf 2)
         orange=$(tput setaf 166)
         white=$(tput setaf 15)
+        black=$(tput setaf 0)
         yellow=$(tput setaf 136)
+        lime_yellow=$(tput setaf 226)
+        blue=$(tput setaf 33)
+        red=$(tput setaf 1)
 
     fi
 
@@ -135,15 +140,21 @@ set_prompts() {
     PS1="\[\033]0;\W\007\]" # Terminal title (set to the
                             # current working directory)
 
+# Move hashtag for light mode
     PS1+="$reset$bold"
-    PS1+="$orange\u"        # Username
+    PS1+="$blue\u"        # Username
     PS1+="$white@"
-    PS1+="$yellow\h"        # Host
-    PS1+="$white: "
-    PS1+="$green\w"         # Working directory
-    PS1+="\$(get_git_repository_details \"$white on $cyan\")"
+#   PS1+="$black@"
+    PS1+="$red\h"        # Host
+    PS1+="$white:"
+#   PS1+="$black: "
+    PS1+="$lime_yellow\w"         # Working directory
+#   PS1+="$yellow\w"              # Working directory
+    PS1+="\$(get_git_repository_details \"$white on $lime_green\")"
+#   PS1+="\$(get_git_repository_details \"$black on $green\")"
     PS1+="\n"
     PS1+="\[$reset\]\[$white\]$ \[$reset\]"
+#   PS1+="\[$reset\]\[$black\]$ \[$reset\]"
 
     export PS1
 
