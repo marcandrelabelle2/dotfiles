@@ -15,7 +15,9 @@ endif
 
 set autoindent                      " Copy indent to the new line.
 
-set backspace=eol,indent,start      " Allow `backspace` in insert mode.
+set backspace=indent                " ┐
+set backspace+=eol                  " │ Allow `backspace`
+set backspace+=start                " ┘ in insert mode.
 
 set backupdir=~/.vim/backups        " Set directory for backup files.
 
@@ -71,7 +73,6 @@ set listchars+=eol:↴                " │ represent invisible characters.
 set listchars+=nbsp:_               " ┘
 
 set magic                           " Enable extended regexp.
-" set mouse+=a                        " Enable mouse support.
 set mousehide                       " Hide mouse pointer while typing.
 set noerrorbells                    " Disable error bells.
 
@@ -153,24 +154,6 @@ if has('windows')
     set winminheight=0              " Allow windows to be squashed.
 endif
 
-" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-" Disable arrow keys in `insert` mode.
-
-" inoremap <Down>  <ESC>:echoe "Use j"<CR>
-" inoremap <Left>  <ESC>:echoe "Use h"<CR>
-" inoremap <Right> <ESC>:echoe "Use l"<CR>
-" inoremap <Up>    <ESC>:echoe "Use k"<CR>
-
-" Disable arrow keys in `normal` mode.
-
-" nnoremap <Down>  :echoe "Use j"<CR>
-" nnoremap <Left>  :echoe "Use h"<CR>
-" nnoremap <Right> :echoe "Use l"<CR>
-" nnoremap <Up>    :echoe "Use k"<CR>
-
-" Prevent `Q` in `normal` mode from entering `Ex` mode.
-nmap Q <Nop>
 
 " ----------------------------------------------------------------------
 " | Plugins                                                            |
@@ -218,9 +201,17 @@ function! InitPlugins() abort
     call minpac#add('tpope/vim-unimpaired')
     call minpac#add('wellle/targets.vim')
 
-endfunction
+" ----------------------- Added ---------------------------------------
+    call minpac#add('vim-airline/vim-airline')
+    call minpac#add('vim-airline/vim-airline-themes')
+    call minpac#add('jeffkreeftmeijer/neovim-sensible')
+    " Auto-correct
+    call minpac#add('dense-analysis/ale')
+    " Markdown TOC
+    call minpac#add('mzlogin/vim-markdown-toc')
+    call minpac#add('JamshedVesuna/vim-markdown-preview')
 
-" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+endfunction
 
 " Define custom commands for managing plugins.
 
@@ -488,7 +479,7 @@ if has("autocmd")
         " List of file types for which the trailing whitespaces
         " should not be removed:
 
-        let excludedFileTypes = []
+    let excludedFileTypes = ["markdown"]
 
         " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -568,7 +559,7 @@ map <leader>gd :SignifyToggle<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" [,l ] Toggle `set list`.
+" [,l ] Toggle `set list`. show whitespaces grey
 
 nmap <leader>l :set list!<CR>
 
@@ -580,7 +571,7 @@ nmap <leader>n :call ToggleRelativeLineNumbers()<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" [,pp] Pretty print
+" [,pp] Pretty print. tests with json, html
 
 map <Leader>pp :call PrettyPrint()<CR>
 
@@ -610,7 +601,7 @@ nmap <leader>ss :call StripTrailingWhitespaces()<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" [,t ] Toggle NERDTree.
+" [,t ] Toggle NERDTree. Shift + I hidden
 
 map <leader>t :NERDTreeToggle<CR>
 
